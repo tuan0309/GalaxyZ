@@ -13,10 +13,14 @@ public class PlayerAim : MonoBehaviour
     private void Awake()
     {
         if (mainCamera == null)
+        {
             mainCamera = Camera.main;
+        }
 
-        // Mặt phẳng ngang tại Y = 0
-        groundPlane = new Plane(Vector3.up, Vector3.zero);
+        groundPlane = new Plane(
+            Vector3.up,
+            transform.position
+        );
     }
 
     private void Update()
@@ -29,26 +33,43 @@ public class PlayerAim : MonoBehaviour
         if (mainCamera == null)
             return;
 
-        Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+        Ray ray =
+            mainCamera.ScreenPointToRay(
+                Input.mousePosition
+            );
 
-        if (groundPlane.Raycast(ray, out float enter))
-        {
-            Vector3 hitPoint = ray.GetPoint(enter);
+        // Cập nhật mặt phẳng theo độ cao Player
+        groundPlane.SetNormalAndPosition(
+            Vector3.up,
+            transform.position
+        );
 
-            Vector3 direction = hitPoint - transform.position;
-            direction.y = 0f;
+        if (!groundPlane.Raycast(ray, out float enter))
+            return;
 
-            if (direction.sqrMagnitude < 0.001f)
-                return;
+        Vector3 mouseWorldPosition =
+            ray.GetPoint(enter);
 
-            Quaternion targetRotation =
-                Quaternion.LookRotation(direction.normalized, Vector3.up);
+        Vector3 direction =
+            mouseWorldPosition -
+            transform.position;
 
-            transform.rotation = Quaternion.Slerp(
+        direction.y = 0f;
+
+        if (direction.sqrMagnitude < 0.001f)
+            return;
+
+        Quaternion targetRotation =
+            Quaternion.LookRotation(
+                direction.normalized,
+                Vector3.up
+            );
+
+        transform.rotation =
+            Quaternion.Slerp(
                 transform.rotation,
                 targetRotation,
                 rotationSpeed * Time.deltaTime
             );
-        }
     }
 }

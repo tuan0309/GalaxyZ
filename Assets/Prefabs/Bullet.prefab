@@ -143,7 +143,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 1
+  m_CollisionDetection: 2
 --- !u!114 &-3892041194326299159
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -156,9 +156,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c2e40469c34f92479d2d78c3120ccdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Bullet
-  shootForce: 35
+  speed: 35
   lifeTime: 2.5
-  impactEffect: {fileID: 7586738266942120689}
+  damage: 25
+  impactEffect: {fileID: 0}
 --- !u!108 &423021217380002731
 Light:
   m_ObjectHideFlags: 0
@@ -311,14 +312,23 @@ TrailRenderer:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0.0022277832
-        value: 0.119501114
-        inSlope: 0
-        outSlope: 0
+        time: 0
+        value: 0.20124817
+        inSlope: -1.4812595
+        outSlope: -1.4812595
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.3784986
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
